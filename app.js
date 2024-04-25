@@ -7,9 +7,12 @@ const customerRoutes = require('./api/routes/customers');
 const workerRoutes = require('./api/routes/workers');
 const bodyParser = require('body-parser');
 
-require('./database/mysql.db');
+require('./database/sql.db');
 
 app.use(express.json());
+
+const NODE_ENV = process.env.NODE_ENV || 'development';
+app.use(NODE_ENV === 'development' ? cors() : cors(corsOptions));
 
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({extended: false}));
