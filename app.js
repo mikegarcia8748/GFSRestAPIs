@@ -2,17 +2,19 @@ const express = require('express');
 const app = express();
 const morgan = require('morgan');
 const bodyParse = require('body-parser')
+const mongoose = require('mongoose')
 
 const customerRoutes = require('./api/routes/customers');
 const workerRoutes = require('./api/routes/workers');
 const bodyParser = require('body-parser');
 
-require('./database/sql.db');
-
-app.use(express.json());
-
-const NODE_ENV = process.env.NODE_ENV || 'development';
-app.use(NODE_ENV === 'development' ? cors() : cors(corsOptions));
+mongoose.connect(
+    'mongodb+srv://mikegarcia8748:XxM0W3zQ3kWx7WML@cluster0.r2yhpoa.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0',
+    {
+        // useNewUrlParser: true,
+        // useMongoClient: true
+    }
+);
 
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({extended: false}));

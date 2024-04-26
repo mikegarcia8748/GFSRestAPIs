@@ -1,35 +1,72 @@
 const express = require('express');
 const router = express.Router();
+const Customer = require('../models/customer');
+const mongoose = require('mongoose');
+const customer = require('../models/customer');
 
 router.get('/', (req, res, next) => {
-    res.status(200).json({
-        message: 'Handling GET request to /customers'
-    });
+    Customer.find()
+        .then(doc => {
+            if (doc) {
+                res.status(200).json({
+                    message: 'Customers successfully retrieve.',
+                    data: doc
+                });
+            } else {
+                res.status(404).json({
+                    message: 'No Record Found!'
+                });
+            }
+        })
+        .catch(err => {
+            res.status(500).json({
+                message: err.message
+            });
+        });
 })
 
 router.post('/', (req, res, next) => {
-    const customer = {
+    // const customer = {
+    //     name: req.body.name,
+    //     alias: req.body.alias
+    // }
+    const customer = new Customer({
+        _id: new mongoose.Types.ObjectId(),
         name: req.body.name,
         alias: req.body.alias
-    }
-    res.status(200).json({
-        message: 'Handling POST request to /customers',
-        customer: customer
-    });
+    })
+    customer.save()
+        .then(result => {
+            res.status(200).json({
+                message: 'New customer has been save!'
+            });
+        })
+        .catch(err => {
+            res.status(500).json({
+                message: err.message
+            });
+        });
 })
 
 router.get('/:customerID', (req, res, next) => {
     const id = req.params.customerID;
-    if (id === 'special') {
-        res.status(200).json({
-            messaage: 'You discovered the special ID.',
-            id: id
+    Customer.findById(id)
+        .exec()
+        .then(doc => {
+            if (doc) {
+                res.status(200).json(doc);
+            } else {
+                res.status(404).json({
+                    message: "No Record Found!"
+                });
+            }
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({
+                error: err
+            });
         });
-    } else {
-        res.status(200).json({
-            message: 'You pass a customer ID parameter.'
-        });
-    }
 })
 
 router.patch('/:customerID', (req, res, next) => {
@@ -39,8 +76,17 @@ router.patch('/:customerID', (req, res, next) => {
 })
 
 router.delete('/:customerID', (req, res, next) => {
-    res.status(200).json({
-        message: 'Deleted customer!'
+    const id = req.params.customerID
+    Customer.deleteOne({_id: id}, (err) => {
+        if (err) {
+            res.status(200).json({
+                message: 'Customer deleted!'
+            });
+        } else {
+            res.status(500).json({
+                message: err.message
+            })
+        }
     });
 })
 
