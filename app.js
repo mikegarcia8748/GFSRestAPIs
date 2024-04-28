@@ -9,8 +9,9 @@ const workerRoutes = require('./api/routes/workers');
 const bodyParser = require('body-parser');
 
 mongoose.connect(
-    'mongodb+srv://mikegarcia8748:XxM0W3zQ3kWx7WML@cluster0.r2yhpoa.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0',
+    process.env.localhost,
     {
+        dbName: 'GFS_SysDB'
         // useNewUrlParser: true,
         // useMongoClient: true
     }
