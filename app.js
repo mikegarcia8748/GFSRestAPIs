@@ -6,6 +6,7 @@ const mongoose = require('mongoose')
 
 const customerRoutes = require('./api/routes/customers');
 const workerRoutes = require('./api/routes/workers');
+const account = require('./api/routes/account')
 const bodyParser = require('body-parser');
 
 mongoose.connect(
@@ -37,6 +38,7 @@ app.use((req, res, next) => {
 
 app.use('/customers', customerRoutes);
 app.use('/workers', workerRoutes);
+app.use('/account', account);
 
 app.use((req, res, next) => {
     const error = new Error('Not Found');
