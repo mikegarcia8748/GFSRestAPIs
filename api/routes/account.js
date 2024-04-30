@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 const User = require('../models/User');
 
@@ -103,8 +104,21 @@ router.post('/authenticate_mpin', (req, res, next) => {
                 }
 
                 if (success) {
+                    console.log(process.env.JWT_KEY);
+                    const token = jwt.sign(
+                    {
+                        userName: user.userName,
+                        userID: user._id
+                    }, 
+                    process.env.JWT_KEY,
+                    {
+                        expiresIn: '1h'
+                    })
                     return res.status(200).json({
-                        message: 'Authenticated'
+                        message: 'Authenticated',
+                        data: {
+                            token: token
+                        }
                     })
                 }
 
