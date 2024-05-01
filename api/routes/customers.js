@@ -2,9 +2,10 @@ const express = require('express');
 const router = express.Router();
 const Customer = require('../models/customer');
 const mongoose = require('mongoose');
+const checkAuth = require('../middleware/check_auth');
 
 // Get List of Customers
-router.get('/', (req, res, next) => {
+router.get('/', checkAuth, (req, res, next) => {
     Customer.find()
         .select('name alias')
         .exec()

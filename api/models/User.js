@@ -9,7 +9,15 @@ const userScheme = mongoose.Schema({
         required: true,
         unique: true
      },
-    accountType: { type: String, required: true,  maxLength: 1 }
+    accountType: { 
+        type: String, 
+        required: true,  
+        maxLength: 1 
+    },
+    isActivated: {
+        type: Boolean,
+        default: true
+    }
 }, {
     timeStamps: true,
 });
