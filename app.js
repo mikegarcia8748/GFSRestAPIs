@@ -8,6 +8,7 @@ const customerRoutes = require('./src/routes/customers');
 const workerRoutes = require('./src/routes/workers');
 const account = require('./src/routes/account')
 const bodyParser = require('body-parser');
+const webHookRoute = require('./src/routes/webhook');
 
 const localhost = process.env.MONGODB_LOCALHOST;
 const dbName = process.env.MONGODB_NAME;
@@ -49,6 +50,7 @@ app.use((req, res, next) => {
 app.use('/customers', customerRoutes);
 app.use('/workers', workerRoutes);
 app.use('/account', account);
+app.use('/webhook', webHookRoute);
 
 app.use((req, res, next) => {
     const error = new Error('Unauthenticated...');
