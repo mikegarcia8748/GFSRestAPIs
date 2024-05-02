@@ -17,7 +17,9 @@ const create_account = (req, res, next) => {
 
                 bcrypt.hash(mpin.toString(), 10, (err, hash) => {
                     if (err) {
-                        return res.status(500).json({
+                        return res.status(200).json({
+                            status: 'error',
+                            statusCode: 500,
                             message: err.message
                         });
                     }
@@ -32,19 +34,25 @@ const create_account = (req, res, next) => {
                     
                     userAccount.save()
                         .then(result => {
-                            res.status(201).json({
+                            res.status(200).json({
+                                status: 'success',
+                                statusCode: 201,
                                 message: 'Account succesfully created.',
                                 acount_mpin: mpin
                             })
                         })
                         .catch(error => {
-                            res.status(500).json({
+                            res.status(200).json({
+                                status: 'error',
+                                statusCode: 500,
                                 message: error.message
                             })
                         })
                 })
             } else {
-                res.status(409).json({
+                res.status(200).json({
+                    status: 'error',
+                    statusCode: 409,
                     message: 'User account already exist.'
                 })
             }
@@ -52,17 +60,21 @@ const create_account = (req, res, next) => {
 }
 
 const get_mill_usernames = (req, res, next) => {
-    User.find()
+    User.find({isActivated: true})
         .select('userName accountType')
         .exec()
         .then(result => {
            if (result.length < 1) {
-            return res.status(404).json({
+            return res.status(200).json({
+                status: 'error',
+                statusCode: 404,
                 message: 'No record found.'
             });
            } 
            
            res.status(200).json({
+            status: 'success',
+            statusCode: 200,
             message: 'Users fetch succesfully.',
             data: result.map(user => {
                 return {
@@ -73,7 +85,9 @@ const get_mill_usernames = (req, res, next) => {
            })
         })
         .catch(error => {
-            res.status(500).json({
+            res.status(200).json({
+                status: 'error',
+                statusCode: 401,
                 message: error.message
             })
         });
@@ -84,16 +98,19 @@ const authenticate_mpin =  (req, res, next) => {
         .exec()
         .then(user => {
             if (user == null || user.length < 1) {
-                return res.status(500).json({
+                return res.status(200).json({
+                    status: 'error',
+                    statusCode: 401,
                     message: 'Invalid account.'
                 })
             }
 
             bcrypt.compare(req.body.mpin, user.userPIN, (error, success) => {
                 if (error) {
-                    return res.status(401).json({
-                        message: 'Authentication failed!',
-                        error_message: error.message
+                    return res.status(200).json({
+                        status: 'error',
+                        statusCode: 401,
+                        message: 'Authentication failed!'
                     });
                 }
 
@@ -109,21 +126,30 @@ const authenticate_mpin =  (req, res, next) => {
                         expiresIn: '1h'
                     })
                     return res.status(200).json({
+                        status: 'success',
+                        statusCode: 200,
                         message: 'Authenticated',
                         data: {
-                            token: token
+                            accessToken: token,
+                            userID: user._id,
+                            fullName: user.fullName,
+                            userName: user.userName,
+                            accountType: user.accountType
                         }
                     })
                 }
 
-                return res.status(401).json({
-                        message: 'Authentication failed!',
-                        error_message: error.message
+                return res.status(200).json({
+                    status: 'error',
+                    statusCode: 401,
+                    message: 'Authentication failed!'
                 });
             })
         })
         .catch(error => {
-            res.status(500).json({
+            res.status(200).json({
+                status: 'error',
+                statusCode: 500,
                 message: error.message
             })
         })
@@ -137,11 +163,15 @@ const deactivateAccount =  (req, res, next) => {
     User.findOneAndUpdate(filter, update, options)
         .then(result => {
             res.status(200).json({
+                status: 'success',
+                statusCode: 200,
                 message: 'Account succesfully deleted.'
             })
         })
         .catch(error => {
-            res.status(500).json({
+            res.status(200).json({
+                status: 'success',
+                statusCode: 201,
                 message: error.message
             })
         })

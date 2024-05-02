@@ -1,10 +1,10 @@
 const http = require('http');
 const app = require('./app');
-const mysql = require('mysql')
 
-const port = process.env.PORT || 3000;
+const PORT = process.env.NODE_SERVER_PORT;
+const IP_ADDRESS = process.env.IP_ADDRESS;
 
 const server = http.createServer(app)
 
-server.listen(port)
+server.listen(PORT, IP_ADDRESS)
 
