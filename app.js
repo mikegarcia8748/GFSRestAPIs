@@ -1,13 +1,12 @@
 const express = require('express');
 const app = express();
 const morgan = require('morgan');
-const bodyParse = require('body-parser')
+const bodyParser = require('body-parser')
 const mongoose = require('mongoose')
 
 const customerRoutes = require('./src/routes/customers');
 const workerRoutes = require('./src/routes/workers');
 const account = require('./src/routes/account')
-const bodyParser = require('body-parser');
 const webHookRoute = require('./src/routes/webhook');
 
 const localhost = process.env.MONGODB_LOCALHOST;
