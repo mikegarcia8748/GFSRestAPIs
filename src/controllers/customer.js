@@ -74,7 +74,29 @@ const add_customer = (req, res, next) => {
     }
 };
 
+const get_customer = (req, res, next) => {
+    const id = req.params.customerID;
+    Customer.findById(id)
+        .exec()
+        .then(doc => {
+            if (doc) {
+                res.status(200).json(doc);
+            } else {
+                res.status(404).json({
+                    message: "No Record Found!"
+                });
+            }
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({
+                error: err
+            });
+        });
+};
+
 module.exports = {
     get_customers,
-    add_customer
+    add_customer,
+    get_customer
 };
