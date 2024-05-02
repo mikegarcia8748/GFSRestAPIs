@@ -8,46 +8,7 @@ const customerController = require('../controllers/customer')
 router.get('/', checkAuth, customerController.get_customers);
 
 // Add Customer
-router.post('/', (req, res, next) => {
-    
-    const name = req.body.name;
-    const alias = req.body.alias;
-
-    // Validate User Entry...
-    if (name.trim() === "") {
-        res.status(200).json({
-            statusCode: "200",
-            message: 'Please enter customer name.'
-        });
-    } else if(alias.trim() === "") {
-        res.status(200).json({
-            statusCode: "200",
-            message: 'Please enter customer alias.'
-        });
-    } else {
-
-        const customer = new Customer({
-            _id: new mongoose.Types.ObjectId(),
-            name: req.body.name,
-            alias: req.body.alias
-        });
-    
-        customer.save()
-            .then(result => {
-                res.status(200).json({
-                    statusCode: "200",
-                    message: 'New customer has been save!',
-                    id: result._id
-                });
-            })
-            .catch(err => {
-                res.status(500).json({
-                    statusCode: "500",
-                    message: err.message
-                });
-            });
-    }
-})
+router.post('/', checkAuth, customerController.add_customer);
 
 router.get('/:customerID', (req, res, next) => {
     const id = req.params.customerID;
