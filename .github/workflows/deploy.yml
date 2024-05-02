@@ -1,25 +1,25 @@
 name: Deploy
 
-on: 
+on:
   push:
     branches:
-    - main
-
+      - main 
 jobs:
   deploy:
     runs-on: windows-latest
 
-    steps: 
-    - name: Checkout Code
+    steps:
+    - name: Checkout code
       uses: actions/checkout@v2
 
-      -name: Install Node.js
-       uses: actions/setup-node@v2
-       with:
-         node-version: '14'
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '14'
 
-      -name: Install dependencies
-        run: npm install
+    - name: Install dependencies
+      run: npm install
 
-      -name: Run deployment script
-        run: npm start
+    - name: Build and deploy APIs
+      run: npm start
+        
