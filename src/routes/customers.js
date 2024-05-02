@@ -12,25 +12,8 @@ router.post('/', checkAuth, customerController.add_customer);
 
 router.get('/:customerID', customerController.get_customer);
 
-router.patch('/:customerID', (req, res, next) => {
-    res.status(200).json({
-        message: 'Updated customer!'
-    });
-})
+router.patch('/:customerID', customerController.update_customer);
 
-router.delete('/:customerID', (req, res, next) => {
-    const id = req.params.customerID
-    Customer.deleteOne({_id: id}, (err) => {
-        if (err) {
-            res.status(200).json({
-                message: 'Customer deleted!'
-            });
-        } else {
-            res.status(500).json({
-                message: err.message
-            })
-        }
-    });
-})
+router.delete('/:customerID', customerController.deactivate_customer);
 
 module.exports = router;

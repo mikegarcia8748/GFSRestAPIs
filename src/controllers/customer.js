@@ -95,8 +95,31 @@ const get_customer = (req, res, next) => {
         });
 };
 
+const update_customer =  (req, res, next) => {
+    res.status(200).json({
+        message: 'Updated customer!'
+    });
+};
+
+const deactivate_customer = (req, res, next) => {
+    const id = req.params.customerID
+    Customer.deleteOne({_id: id}, (err) => {
+        if (err) {
+            res.status(200).json({
+                message: 'Customer deleted!'
+            });
+        } else {
+            res.status(500).json({
+                message: err.message
+            })
+        }
+    });
+};
+
 module.exports = {
     get_customers,
     add_customer,
-    get_customer
+    get_customer,
+    update_customer,
+    deactivate_customer
 };
