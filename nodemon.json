@@ -2,8 +2,8 @@
     "env" : {
         "MONGO_ATLAS_USR": "mikegarcia8748",
         "MONGO_ATLAS_PW": "XxM0W3zQ3kWx7WML",
-        "MONGODB_LOCALHOST": "mongodb://192.168.100.240:27017",
-        "IP_ADDRESS": "192.168.100.240",
+        "MONGODB_LOCALHOST": "mongodb://localhost:27017",
+        "IP_ADDRESS": "0.0.0.0",
         "NODE_SERVER_PORT": "3000",
         "MONGODB_CLOUD": "mongodb+srv://mikegarcia8748:XxM0W3zQ3kWx7WML@cluster0.r2yhpoa.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0",
         "JWT_KEY": "XC89asd8w9awd",
