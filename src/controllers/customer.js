@@ -33,6 +33,48 @@ const get_customers = (req, res, next) => {
         });
 };
 
+const add_customer = (req, res, next) => {
+    
+    const name = req.body.name;
+    const alias = req.body.alias;
+
+    // Validate User Entry...
+    if (name.trim() === "") {
+        res.status(200).json({
+            statusCode: "200",
+            message: 'Please enter customer name.'
+        });
+    } else if(alias.trim() === "") {
+        res.status(200).json({
+            statusCode: "200",
+            message: 'Please enter customer alias.'
+        });
+    } else {
+
+        const customer = new Customer({
+            _id: new mongoose.Types.ObjectId(),
+            name: req.body.name,
+            alias: req.body.alias
+        });
+    
+        customer.save()
+            .then(result => {
+                res.status(200).json({
+                    statusCode: "200",
+                    message: 'New customer has been save!',
+                    id: result._id
+                });
+            })
+            .catch(err => {
+                res.status(500).json({
+                    statusCode: "500",
+                    message: err.message
+                });
+            });
+    }
+};
+
 module.exports = {
-    get_customers
+    get_customers,
+    add_customer
 };
