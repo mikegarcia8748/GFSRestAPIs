@@ -12,6 +12,9 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
+    - name: Fetch and pull origin branch
+      run: git fetch origin && git pull origin main
+
     - name: Setup Node.js
       uses: actions/setup-node@v3
       with:
