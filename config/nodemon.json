@@ -1,0 +1,9 @@
+{
+    "env" : {
+        "MONGO_ATLAS_USR": "mikegarcia8748",
+        "MONGO_ATLAS_PW": "XxM0W3zQ3kWx7WML",
+        "localhost": "mongodb://localhost:27017",
+        "cloud": "mongodb+srv://mikegarcia8748:XxM0W3zQ3kWx7WML@cluster0.r2yhpoa.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0",
+        "JWT_KEY": "XC89asd8w9awd"
+    }
+}
