@@ -102,18 +102,18 @@ const update_customer =  (req, res, next) => {
 };
 
 const deactivate_customer = (req, res, next) => {
-    const id = req.params.customerID
-    Customer.deleteOne({_id: id}, (err) => {
-        if (err) {
-            res.status(200).json({
-                message: 'Customer deleted!'
-            });
-        } else {
-            res.status(500).json({
-                message: err.message
-            })
-        }
-    });
+    // const id = req.params.customerID
+    // Customer.deleteOne({_id: id}, (err) => {
+    //     if (err) {
+    //         res.status(200).json({
+    //             message: 'Customer deleted!'
+    //         });
+    //     } else {
+    //         res.status(500).json({
+    //             message: err.message
+    //         })
+    //     }
+    // });
 };
 
 module.exports = {
