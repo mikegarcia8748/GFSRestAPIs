@@ -6,7 +6,8 @@ const mongoose = require('mongoose')
 
 const customerRoutes = require('./src/routes/customers');
 const workerRoutes = require('./src/routes/workers');
-const account = require('./src/routes/account')
+const accountRoute = require('./src/routes/account');
+const millServicePricingRoute = require('./src/routes/millserviceprice');
 const webHookRoute = require('./src/routes/webhook');
 
 const localhost = process.env.MONGODB_LOCALHOST;
@@ -48,7 +49,8 @@ app.use((req, res, next) => {
 
 app.use('/customers', customerRoutes);
 app.use('/workers', workerRoutes);
-app.use('/account', account);
+app.use('/account', accountRoute);
+app.use('/mill', millServicePricingRoute);
 app.use('/webhook', webHookRoute);
 
 app.use((req, res, next) => {
