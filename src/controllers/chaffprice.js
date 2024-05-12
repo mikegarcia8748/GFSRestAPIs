@@ -35,7 +35,7 @@ const add_price = (req, res, next) => {
 
 const get_chaff_price = (req, res, next) => {
     Chaffprice.find({})
-        .sort({createdAt: -1})
+        .sort({createdAt: 1})
         .limit(1)
         .exec()
         .then(result => {
@@ -43,7 +43,7 @@ const get_chaff_price = (req, res, next) => {
                 return res.status(200).json({
                     status: "error",
                     statusCode: "404",
-                    message: "No mill service price was found"
+                    message: "No chaff price was found"
                 })
             }
             

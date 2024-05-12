@@ -8,7 +8,8 @@ const customerRoutes = require('./src/routes/customers');
 const workerRoutes = require('./src/routes/workers');
 const accountRoute = require('./src/routes/account');
 const millServicePricingRoute = require('./src/routes/millserviceprice');
-const chaffPriceRoute = require("./src/routes/chaffprice");
+const chaffPriceRoute = require('./src/routes/chaffprice');
+const millTransactionRoute = require('./src/routes/milltransactions');
 const webHookRoute = require('./src/routes/webhook');
 
 const localhost = process.env.MONGODB_LOCALHOST;
@@ -51,8 +52,9 @@ app.use((req, res, next) => {
 app.use('/customers', customerRoutes);
 app.use('/workers', workerRoutes);
 app.use('/account', accountRoute);
-app.use('/mill', millServicePricingRoute);
-app.use('/chaff', chaffPriceRoute);
+app.use('/millpricing', millServicePricingRoute);
+app.use('/milltransaction', millTransactionRoute);
+app.use('/chaffpricing', chaffPriceRoute);
 app.use('/webhook', webHookRoute);
 
 app.use((req, res, next) => {

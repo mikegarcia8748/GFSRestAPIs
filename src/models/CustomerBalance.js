@@ -1,4 +1,4 @@
-const mongoose = required('mongoose');
+const mongoose = require('mongoose');
 
 const customerBalanceScheme = mongoose.Schema({
     _id: mongoose.Schema.Types.ObjectID, 

@@ -8,5 +8,5 @@ const customerScheme = mongoose.Schema({
 }, {
     timestamps: true
 });
-
+customerScheme.index({name: 'text', 'name': 'text'});
 module.exports = mongoose.model('Customer', customerScheme)

@@ -1,9 +1,7 @@
 const mongoos = require('mongoose');
 const MillTransaction = require('../models/MIllTransaction');
-const MillPayment = require('../models/MillPayment')
-const CustomerBalance = require('../models/CustomerBalance')
-const Customer = require('../models/Customer')
-const User = require('../models/User')
+const MillPayment = require('../models/MillPayment');
+const CustomerBalance = require('../models/CustomerBalance');
 
 const create_transaction = (req, res, next) => {
     const customerID = req.body.customerID;
@@ -22,6 +20,7 @@ const create_transaction = (req, res, next) => {
     const balance = req.body.balance;
     
     const millTransaction = new MillTransaction({
+        _id: new mongoos.Types.ObjectId(),
         customerID: customerID,
         entryBy: entryBy,
         riceWeight: riceWeight,
@@ -36,29 +35,47 @@ const create_transaction = (req, res, next) => {
         .save()
         .then(result => {
             const millPayment = new MillPayment({
+                _id: new mongoos.Types.ObjectId(),
                 referenceID: result._id,
-                millPrice: millPayment,
+                millPrice: millPrice,
                 chaffPrice: chaffPrice,
                 subTotal: subTotal,
                 deductions: deductions,
                 amountPaid: amountPaid,
                 balance: balance
-            });
-
+            })
+        
             millPayment
                 .save()
                 .then(result => {
                     return res.status(201).json({
-                        message: 'Transaction successfully save.',
-                        referenceID: result._id
+                        status: "success",
+                        statusCode: "200",
+                        message: 'Transaction successfully save.'
                     })
                 })
+            
+            if (balance !== 0) {
+                const customerBalance = new CustomerBalance({
+                    _id: new mongoos.Types.ObjectId(),
+                    customerID: customerID,
+                    remarks: 'Milling balance',
+                    amount: balance
+                })
+
+                customerBalance.save()
+                    .then(result => {
+                        console.log("Customer balance saved!")
+                    })
+            }
         })
         .catch(error => {
-            res.status(500).json({
+            return res.status(200).json({
+                status: "error",
+                statusCode: "500",
                 message: error.message
-            });
-        });
+            })
+        })
 };
 
 

@@ -5,7 +5,7 @@ const checkAuth = require('../middleware/check_auth');
 const customerController = require('../controllers/customer')
 
 // Get List of Customers
-router.get('/', checkAuth, customerController.get_customers);
+router.get('/get_customers/:index', checkAuth, customerController.get_customers);
 
 // Add Customer
 router.post('/add_customer', checkAuth, customerController.add_customer);

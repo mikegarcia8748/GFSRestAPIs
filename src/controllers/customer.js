@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const get_customers = (req, res, next) => {
     Customer.find()
         .select('name alias')
+        .limit(req.params.index)
         .exec()
         .then(doc => {
             if (doc.length !== 0) {
@@ -105,40 +106,41 @@ const get_customer = (req, res, next) => {
         });
 };
 
-const search_customer = (req, res, next) => {
+const search_customer = async (req, res, next) => {
     const customerName = req.params.customerName;
 
-    Customer.find({ name: { $regex: customerName, $options: 'i'} })
-        .exec()
-        .then(result => {
-            if (result.length == 0) {
-                return res.status(200).json({
-                    status: 'error',
-                    statusCode: 404,
-                    message: "No Record Found!"
-                });
-            }
+    try {
 
-            res.status(200).json({
-                status: 'success',
-                statusCode: 200,
-                message: "Customer found",
-                data: result.map(customer => {
-                    return { 
-                        id: customer.id,
-                        name: customer.name,
-                        alias: customer.alias
-                    }
-                })
-            });
-        })
-        .catch(err => {
-            res.status(500).json({
+        const result = await Customer.find({ name: { $regex: new RegExp(customerName, 'i') } });
+
+        if (result.length == 0) {
+            return res.status(200).json({
                 status: 'error',
-                statusCode: 500,
-                message: err.message, 
+                statusCode: 404,
+                message: "No Record Found!"
             });
+        }
+
+        res.status(200).json({
+            status: 'success',
+            statusCode: 200,
+            message: "Customer found",
+            data: result.map(customer => {
+                return { 
+                    id: customer.id,
+                    name: customer.name,
+                    alias: customer.alias
+                }
+            })
         });
+        
+    } catch (error) {
+        res.status(500).json({
+            status: 'error',
+            statusCode: 500,
+            message: err.message, 
+        });
+    }
 };
 
 const update_customer =  (req, res, next) => {

@@ -1,4 +1,3 @@
-const { timeStamp } = require('console');
 const mongoose = require('mongoose');
 
 const millPaymentScheme = mongoose.Schema({
