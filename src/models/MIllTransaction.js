@@ -12,7 +12,7 @@ const millTransactionScheme = mongoose.Schema({
     twentyFiveKgs: { type: Number, default: 0 },
     chaffWeight: { type: Number, default: 0 }
 }, {
-    timeStamps: true
+    timestamps: true
 });
 
 module.exports = mongoose.model('MillTransaction', millTransactionScheme);

@@ -1,0 +1,15 @@
+const mongoose = require('mongoose');
+const price = require('../models/MillServicePrice');
+
+const getMillPrice = {
+
+}
+
+const addNewPrice = {
+
+}
+
+module.exports = {
+    getMillPrice,
+    addNewPrice
+}

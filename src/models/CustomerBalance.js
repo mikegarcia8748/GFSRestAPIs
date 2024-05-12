@@ -8,7 +8,7 @@ const customerBalanceScheme = mongoose.Schema({
     datePaid: { type: Date },
     updatedBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }
 }, {
-    timeStamps: true
+    timestamps: true
 });
 
 module.exports = mongoose.model('CustomerBalance', customerBalanceScheme);

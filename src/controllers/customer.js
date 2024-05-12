@@ -1,4 +1,4 @@
-const Customer = require('../models/customer');
+const Customer = require('../models/Customer');
 const mongoose = require('mongoose');
 
 const get_customers = (req, res, next) => {
@@ -8,6 +8,7 @@ const get_customers = (req, res, next) => {
         .then(doc => {
             if (doc.length !== 0) {
                 res.status(200).json({
+                    status: "success",
                     statusCode: "200",
                     message: 'Customers successfully retrieve.',
                     data: doc.map(doc => {
@@ -19,7 +20,8 @@ const get_customers = (req, res, next) => {
                     })
                 });
             } else {
-                res.status(404).json({
+                res.status(200).json({
+                    status: "error",
                     statusCode: "404",
                     message: 'No Record Found!'
                 });
@@ -41,12 +43,14 @@ const add_customer = (req, res, next) => {
     // Validate User Entry...
     if (name.trim() === "") {
         res.status(200).json({
-            statusCode: "200",
+            status: "error",
+            statusCode: "500",
             message: 'Please enter customer name.'
         });
     } else if(alias.trim() === "") {
         res.status(200).json({
-            statusCode: "200",
+            status: "error",
+            statusCode: "500",
             message: 'Please enter customer alias.'
         });
     } else {
@@ -60,13 +64,19 @@ const add_customer = (req, res, next) => {
         customer.save()
             .then(result => {
                 res.status(200).json({
+                    status: "success",
                     statusCode: "200",
                     message: 'New customer has been save!',
-                    id: result._id
+                    data: {
+                        id: result._id,
+                        name: name,
+                        alias: alias  
+                    }
                 });
             })
             .catch(err => {
                 res.status(500).json({
+                    status: "error",
                     statusCode: "500",
                     message: err.message
                 });
@@ -95,6 +105,42 @@ const get_customer = (req, res, next) => {
         });
 };
 
+const search_customer = (req, res, next) => {
+    const customerName = req.params.customerName;
+
+    Customer.find({ name: { $regex: customerName, $options: 'i'} })
+        .exec()
+        .then(result => {
+            if (result.length == 0) {
+                return res.status(200).json({
+                    status: 'error',
+                    statusCode: 404,
+                    message: "No Record Found!"
+                });
+            }
+
+            res.status(200).json({
+                status: 'success',
+                statusCode: 200,
+                message: "Customer found",
+                data: result.map(customer => {
+                    return { 
+                        id: customer.id,
+                        name: customer.name,
+                        alias: customer.alias
+                    }
+                })
+            });
+        })
+        .catch(err => {
+            res.status(500).json({
+                status: 'error',
+                statusCode: 500,
+                message: err.message, 
+            });
+        });
+};
+
 const update_customer =  (req, res, next) => {
     res.status(200).json({
         message: 'Updated customer!'
@@ -119,6 +165,7 @@ const deactivate_customer = (req, res, next) => {
 module.exports = {
     get_customers,
     add_customer,
+    search_customer,
     get_customer,
     update_customer,
     deactivate_customer

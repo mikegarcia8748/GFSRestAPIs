@@ -7,8 +7,10 @@ module.exports = (req, res, next) => {
         req.userData = decoded;
         next();
     } catch(error) {
-        return res.status(401).json({
-            message: 'Unauthenticated.'
+        return res.status(200).json({
+            status: 'error',
+            statusCode: 401,
+            message: 'Invalid session.'
         })
     }
 };

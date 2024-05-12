@@ -6,7 +6,7 @@ const customerScheme = mongoose.Schema({
     alias: { type: String, required: true },
     updatedBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }
 }, {
-    timeStamps: true
+    timestamps: true
 });
 
 module.exports = mongoose.model('Customer', customerScheme)

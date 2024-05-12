@@ -7,7 +7,7 @@ const millServicePriceScheme = mongoose.Schema({
     entryBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
     updatedBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }
 }, {
-    timeStamps: true
+    timestamps: true
 });
 
 module.exports = mongoose.model('MillServicePrice', millServicePriceScheme)

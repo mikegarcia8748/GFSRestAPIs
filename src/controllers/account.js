@@ -1,6 +1,7 @@
 const User = require('../models/User');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const mongoose = require('mongoose');
 
 const create_account = (req, res, next) => {
     const fullName = req.body.fullName;
@@ -115,7 +116,6 @@ const authenticate_mpin =  (req, res, next) => {
                 }
 
                 if (success) {
-                    console.log(process.env.JWT_KEY);
                     const token = jwt.sign(
                     {
                         userName: user.userName,
