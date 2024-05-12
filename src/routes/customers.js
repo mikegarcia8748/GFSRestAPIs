@@ -13,7 +13,7 @@ router.post('/add_customer', checkAuth, customerController.add_customer);
 // Get Customer Info
 router.get('/:customerID', checkAuth, customerController.get_customer);
 
-// Search Customer Info
+// Search Customer
 router.get('/search/:customerName', checkAuth, customerController.search_customer);
 
 // Update Customer Details/Status...
