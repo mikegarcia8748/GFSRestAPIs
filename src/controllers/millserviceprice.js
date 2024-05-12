@@ -3,11 +3,11 @@ const mongoose = require('mongoose');
 
 const getMillPrice = (req, res, next) => { 
     MillServicePrice.find({})
-        .sort({createdAt: 1})
+        .sort({createdAt: -1})
         .limit(1)
         .exec()
         .then(result => {
-            if (result.lenght == 0) {
+            if (result.lenght === 0) {
                 return res.status(200).json({
                     status: "error",
                     statusCode: "404",
