@@ -60,8 +60,8 @@ const create_account = (req, res, next) => {
         });
 }
 
-const get_mill_usernames = (req, res, next) => {
-    User.find({isActivated: true})
+const get_authorize_users = (req, res, next) => {
+    User.find({isActivated: true, accountType: 0})
         .select('userName accountType')
         .exec()
         .then(result => {
@@ -180,6 +180,6 @@ const deactivateAccount =  (req, res, next) => {
 module.exports = {
     authenticate_mpin,
     create_account,
-    get_mill_usernames,
+    get_authorize_users,
     deactivateAccount,
 }

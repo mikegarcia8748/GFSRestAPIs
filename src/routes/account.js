@@ -6,7 +6,7 @@ const accountController = require('../controllers/account');
 router.post('/create_account', accountController.create_account);
 
 // Get Usernames for Rice Mill Users...
-router.get('/get_mill_users', accountController.get_mill_usernames);
+router.get('/get_authorize_users', accountController.get_authorize_users);
 
 // User Authentication...
 router.post('/authenticate_mpin', accountController.authenticate_mpin);
