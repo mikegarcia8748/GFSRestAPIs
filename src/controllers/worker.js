@@ -3,34 +3,58 @@ const mongoose = require('mongoose');
 const user = require('../models/User')
 
 const addWorker = (req, res, next) => {
-    const worker = {
-        name: req.body.name,
-        wage: req.body.wage 
-    };
-    res.status(201).json({
-        message: 'Worker was added.',
-        worker: worker
+    const worker = new user({
+        _id: new mongoose.Types.ObjectId(),
+        fullName: req.body.fullName,
+        userName: req.body.userName,
+        userPIN: '000000',
+        accountType: 1
     });
+
+    worker.save()
+        .then(result => {
+            res.status(200).json({
+                status: "success",
+                statusCode: "201",
+                message: "A new employee was added!"
+            })
+        })
+        .catch(error => {
+            res.status(200).json({
+                status: "error",
+                statusCode: "500",
+                message: error.message
+            })
+        })
 };
 
 const getWorkers = (req, res, next) => {
-    res.status(200).json({
-        message: 'Workers were fetch.'
-    });
-};
+    user.find()
+        .select('fullname, username')
+        .exec()
+        .then(result => {
+            if (result.length === 0) {
+                return res.status(200).json({
+                    status: "error",
+                    statusCode: "404",
+                    message: "No employees found!"
+                })
 
-const getWorkerDetail = (req, res, next) => {
-    const id = req.params.workerID;
-    if (id === 'special') {
-        res.status(200).json({
-            messaage: 'Worker details.',
-            id: id
-        });
-    } else {
-        res.status(200).json({
-            message: 'You pass a worker ID parameter.'
-        });
-    }
+                res.status(200).json({
+                    status: "success",
+                    statusCode: "200",
+                    message: "Employee retrieved successfully!",
+                    data: result
+                })
+            }
+        })
+        .catch(error => {
+            res.status(200).json({
+                status: "error",
+                statusCode: "500",
+                message: error.message
+            })
+        })
 };
 
 const updateWorkerDetail = (req, res, next) => {
@@ -48,7 +72,6 @@ const deactivateWorker = (req, res, next) => {
 module.exports = {
     addWorker,
     getWorkers,
-    getWorkerDetail,
     updateWorkerDetail,
     deactivateWorker
 }

@@ -6,7 +6,7 @@ const expensesSchema = mongoose.Schema({
     amount: { type: Number, required: true },
     entryBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true }
 }, {
-    timestamp: true
+    timestamps: true
 });
 
 module.exports = mongoose.model('Expenses', expensesSchema);

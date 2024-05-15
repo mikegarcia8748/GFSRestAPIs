@@ -6,8 +6,6 @@ const controller = require('../controllers/worker');
 
 router.post('/add_worker', controller.addWorker);
 
-router.get('/:workerID', controller.getWorkerDetail);
-
 router.patch('/:workerID', controller.updateWorkerDetail);
 
 router.delete('/:workerID', controller.deactivateWorker);
