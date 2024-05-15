@@ -66,7 +66,7 @@ const add_customer = (req, res, next) => {
             .then(result => {
                 res.status(200).json({
                     status: "success",
-                    statusCode: "200",
+                    statusCode: "201",
                     message: 'New customer has been save!',
                     data: {
                         id: result._id,
