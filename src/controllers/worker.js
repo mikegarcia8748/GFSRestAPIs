@@ -29,7 +29,7 @@ const addWorker = (req, res, next) => {
 };
 
 const getWorkers = (req, res, next) => {
-    user.find( { isActivated: true }, { accountType: 1 } )
+    user.find({ isActivated: true, accountType: 1 })
         .select('fullName userName')
         .exec()
         .then(result => {

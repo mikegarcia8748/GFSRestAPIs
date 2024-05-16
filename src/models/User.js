@@ -10,7 +10,7 @@ const userScheme = mongoose.Schema({
         unique: true
      },
     accountType: { 
-        type: String, 
+        type: Number, 
         required: true,  
         maxLength: 1 
     },
