@@ -29,8 +29,8 @@ const addWorker = (req, res, next) => {
 };
 
 const getWorkers = (req, res, next) => {
-    user.find()
-        .select('fullname, username')
+    user.find( { isActivated: true }, { accountType: 1 } )
+        .select('fullName userName')
         .exec()
         .then(result => {
             if (result.length === 0) {
@@ -39,14 +39,14 @@ const getWorkers = (req, res, next) => {
                     statusCode: "404",
                     message: "No employees found!"
                 })
-
-                res.status(200).json({
-                    status: "success",
-                    statusCode: "200",
-                    message: "Employee retrieved successfully!",
-                    data: result
-                })
             }
+
+            res.status(200).json({
+                status: "success",
+                statusCode: "200",
+                message: "Employee retrieved successfully!",
+                data: result
+            })
         })
         .catch(error => {
             res.status(200).json({

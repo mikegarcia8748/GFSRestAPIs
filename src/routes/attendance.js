@@ -6,6 +6,6 @@ const controller = require('../controllers/attendance');
 
 router.get('/get_attendance/:workerID', checkAuth, controller.getAttendance);
 
-router.post('/tag_present/:workerID', checkAuth, controller.timeInAttendance);
+router.post('/create_attendance', checkAuth, controller.timeInAttendance);
 
 module.exports = router;

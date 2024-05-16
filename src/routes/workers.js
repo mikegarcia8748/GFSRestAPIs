@@ -4,10 +4,12 @@ const router = express.Router();
 const checkAuth = require('../middleware/check_auth');
 const controller = require('../controllers/worker');
 
-router.post('/add_worker', controller.addWorker);
+router.post('/add_worker', checkAuth, controller.addWorker);
 
-router.patch('/:workerID', controller.updateWorkerDetail);
+router.get('/get_employees', checkAuth, controller.getWorkers);
 
-router.delete('/:workerID', controller.deactivateWorker);
+router.patch('/:workerID', checkAuth, controller.updateWorkerDetail);
+
+router.delete('/:workerID', checkAuth, controller.deactivateWorker);
 
 module.exports = router;

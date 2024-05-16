@@ -62,7 +62,7 @@ app.use('/expenses', expensesRoute);
 app.use('/webhook', webHookRoute);
 
 app.use((req, res, next) => {
-    const error = new Error('404 NOT FOUND');
+    const error = new Error('404 NOT FOUND!');
     error.status = 404;
     next(error);
 })

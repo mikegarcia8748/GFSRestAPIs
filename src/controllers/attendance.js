@@ -5,7 +5,8 @@ const timeInAttendance = (req, res, next) => {
     
     const attendance = new Attendance({
         _id: new mongoose.Types.ObjectId(),
-        workerID: req.params.workerID
+        workerID: req.body.workerID,
+        entryBy: req.body.entryBy
     });
 
     attendance.save()
@@ -28,7 +29,7 @@ const timeInAttendance = (req, res, next) => {
 const getAttendance = (req, res, next) => {
     const workerID = req.params.workerID;
 
-    Attendance.findById(workerID)
+    Attendance.find({workerID: workerID})
         .exec()
         .then(result => {
             if (result === null) {
@@ -52,7 +53,8 @@ const getAttendance = (req, res, next) => {
                 message: "Attendance retrieved!",
                 data: result.map(docs => {
                     return {
-                        date: docs.createdAt
+                        date: docs.createdAt,
+                        entryBy: docs.entryBy
                     } 
                 })
             })
