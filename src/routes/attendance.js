@@ -8,4 +8,6 @@ router.get('/get_attendance/:workerID', checkAuth, controller.getAttendance);
 
 router.post('/create_attendance', checkAuth, controller.timeInAttendance);
 
+router.get('/get_attendance_today', controller.getTodaysAttendance);
+
 module.exports = router;

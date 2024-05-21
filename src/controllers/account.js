@@ -61,7 +61,7 @@ const create_account = (req, res, next) => {
 }
 
 const get_authorize_users = (req, res, next) => {
-    User.find({isActivated: true }, { accountType: 0 })
+    User.find({ isActivated: true, accountType: 0 })
         .select('userName accountType')
         .exec()
         .then(result => {
